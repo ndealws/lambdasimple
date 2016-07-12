@@ -1,6 +1,6 @@
 
 
-# Momentro
+# Sample application
 
 
 
