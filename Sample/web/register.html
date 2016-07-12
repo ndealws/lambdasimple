@@ -85,8 +85,12 @@ $scope.registerUser = function(){
 	var password = $scope.user_signup.password;
 
 	var params = JSON.stringify({
-		email: "thilina123@gmail.com",
-		password:"abc@gmail.com"
+		email: email,
+		password:password,
+		name: "tbhara",
+		phoneno: "5774",
+  		designation: "clerk",
+	  	username: "tharaka"
 	});
 
 var req = {
@@ -95,7 +99,11 @@ var req = {
  headers: {
    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
  },
- data: { email: 'salwithana@gmail.com',password:'abc@123' }
+ data: { email: $scope.user_signup.email, password:$scope.user_signup.password ,
+		name: "tbhara",
+		phoneno: "5774",
+  		designation: "clerk",
+	  	username: "tharaka"}
 }
 
 	console.log(req);
@@ -106,8 +114,13 @@ var req = {
     success(function(data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
-		alert("User Successfully Created !!!")
-        console.log(data);
+		console.log(data);
+        if (parseInt(data)==1){
+			 alert("User Successfully Created !!!")
+		}else{
+			alert("User Creation failed. User's email is not unique !!!")
+		}
+       
       }). 
     error(function(data, status, headers, config) {
         // called asynchronously if an error occurs
