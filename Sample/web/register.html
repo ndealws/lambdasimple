@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="myApp">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title></title>
+
+  <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="./assets/css/font-awesome.min.css" rel="stylesheet">
+  <link href="./assets/css/animate.min.css" rel="stylesheet">
+
+  <!-- Custom styling plus plugins -->
+ 
+  <link href="./assets/css/floatexamples.css" rel="stylesheet" type="text/css" />
+
+
+  <script src="./assets/js/common/jquery.min.js"></script>
+  
+  
+<!-- Angular Scripts -->
+<script src="./assets/js/common/angular.min.js"></script>
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png">
+  <!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body style="background:#F7F7F7;">
+
+
+<div class="col-sm-4 col-sm-offset-4">
+ <div class="page-header"><h1>User Registration</h1></div>
+<div ng-controller="UserRegisterController">
+	<form name="userSignUpForm"  novalidate> 
+
+        <!-- EMAIL -->
+        <div class="form-group" ng-class="{'has-error':userSignUpForm.email.$invalid && !userSignUpForm.email.$pristine}">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="user_signup.email" placeholder="Email" required>
+            <p ng-show="userSignUpForm.email.$invalid && !userSignUpForm.email.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+   <!-- PASSWORD -->
+        <div class="form-group" ng-class="{'has-error':userSignUpForm.password.$invalid && !userSignUpForm.password.$pristine}">
+            <label>Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="user_signup.password" ng-minlength="3" ng-maxlength="15" placeholder="PassWord" required>
+             <p ng-show="userSignUpForm.password.$error.minlength" class="help-block">Password is too short.</p>
+             <p ng-show="userSignUpForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+        </div>
+
+    <!-- CONFIRM PASSWORD -->
+    	  <div class="form-group" ng-class="">
+            <label>Password</label>
+            <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" ng-model="user_signup.passwordConfirm" ng-minlength="3" ng-maxlength="15" placeholder="Re-type PassWord" required pwCheck="password">
+            <p ng-show="userSignUpForm.confirmPassword.$error.pwcheck" class="help-block">Password mismatch.</p>
+        </div>
+
+
+     	<button type="button" id="btnRegister" class="btn btn-primary" ng-disabled="userSignUpForm.$invalid" ng-click="registerUser()">Register</button>
+     	<button type="reset" class="btn btn-primary">Cancel</button>
+	</form>
+</div>
+<div class="separator"> </div>
+	<p>Allready a Member ? <a href="#loginPage">Login to Site</a></p>
+</div>
+
+<script>
+var momemtoControllers = angular.module('myApp',[]);
+
+momemtoControllers.controller('UserRegisterController',['$scope','$http',function($scope,$http){
+
+$scope.registerUser = function(){
+	var email = $scope.user_signup.email;
+	var password = $scope.user_signup.password;
+
+	var params = JSON.stringify({
+		email: "thilina123@gmail.com",
+		password:"abc@gmail.com"
+	});
+
+var req = {
+ method: 'POST',
+ url: 'https://1zwt2m4dqg.execute-api.eu-west-1.amazonaws.com/qa',
+ headers: {
+   'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+ },
+ data: { email: 'salwithana@gmail.com',password:'abc@123' }
+}
+
+	console.log(req);
+	//var headers = "application/json" ;
+
+	//var url = "https://gec659pixh.execute-api.eu-west-1.amazonaws.com/production";
+	$http(req).
+    success(function(data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+		alert("User Successfully Created !!!")
+        console.log(data);
+      }). 
+    error(function(data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        alert("error");
+      });
+}
+}]);
+
+</script>
+
+
+</body>
+</html>
