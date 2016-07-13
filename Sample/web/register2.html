@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="myApp">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title></title>
+	
+  <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="./assets/css/font-awesome.min.css" rel="stylesheet">
+  <link href="./assets/css/animate.min.css" rel="stylesheet">
+
+  <!-- Custom styling plus plugins -->
+ 
+  <link href="./assets/css/floatexamples.css" rel="stylesheet" type="text/css" />
+  <script src="./assets/js/common/jquery.min.js"></script>
+  <script src="./assets/js/common/pwCheck.js"></script>
+  
+<!-- Angular Scripts -->
+<script src="./assets/js/common/angular.min.js"></script>
+<script src="./assets/js/common/angular-route.min.js"></script>
+<script src="./assets/js/common/angular-animate.min.js"></script>
+
+<!-- favicon snippet -->
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png">
+
+<!-- Controller Scripts -->
+<script src="./assets/js/app/controllers.js"></script>
+
+  <!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body style="background:#F7F7F7;">
+
+
+<div class="col-sm-4 col-sm-offset-4">
+ <div class="page-header"><h3>User Registration</h3></div>
+<div ng-controller="UserRegisterController">
+
+	<form name="userSignUpForm"  novalidate>    
+          <!-- NAME -->
+         <div class="form-group" ng-class="{'has-error':userSignUpForm.nameofuser.$invalid && !userSignUpForm.nameofuser.$pristine}">
+
+            <label>Name</label>
+            <input type="text" name="nameofuser" class="form-control" ng-model="user_signup.nameofuser" placeholder="Name" required >
+            <p ng-show="userSignUpForm.nameofuser.$invalid && !userSignUpForm.nameofuser.$pristine" class="help-block">Name is a mandatory field.</p>
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="form-group" ng-class="{'has-error':userSignUpForm.email.$invalid && !userSignUpForm.email.$pristine}">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="user_signup.email" placeholder="Email" required>
+            <p ng-show="userSignUpForm.email.$invalid && !userSignUpForm.email.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+
+        <!-- PHONE NUMBER -->
+         <div class="form-group" ng-class="{'has-error':userSignUpForm.phone.$invalid}">
+            <label>Phone Number</label>
+            <input type="text" name="phone" class="form-control" ng-model="user_signup.phone" placeholder="Phone Number" 
+            ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" required>
+
+            <p ng-show="userSignUpForm.phone.$error.required" class="help-block">Phone number is required.</p>
+            <p ng-show="userSignUpForm.phone.$error.pattern" class="help-block">Invalid phone Number</p>
+        </div>
+
+         <!-- DESIGNATION -->
+         <div class="form-group" ng-class="{'has-error':userSignUpForm.designation.$invalid && !userSignUpForm.designation.$pristine}">
+            <label>Designation</label>
+            <input type="text" name="designation" class="form-control" ng-model="user_signup.designation" placeholder="Designation" required>
+            <p ng-show="userSignUpForm.designation.$invalid && !userSignUpForm.designation.$pristine" class="help-block">Designation is required.</p>
+        </div>
+
+        <!-- USER NAME -->
+         <div class="form-group" ng-class="{'has-error':userSignUpForm.username.$invalid && !userSignUpForm.username.$pristine}">
+            <label>User Name</label>
+            <input type="text" name="username" class="form-control" ng-model="user_signup.username" placeholder="UserName" required ng-disabled>
+            <p ng-show="userSignUpForm.username.$invalid && !userSignUpForm.username.$pristine" class="help-block">User Name is required.</p>
+        </div>
+
+
+   <!-- PASSWORD -->
+        <div class="form-group" ng-class="{'has-error':userSignUpForm.password.$invalid && !userSignUpForm.password.$pristine}">
+            <label>Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="user_signup.password" ng-minlength="3" ng-maxlength="15" placeholder="PassWord" required>
+             <p ng-show="userSignUpForm.password.$error.minlength" class="help-block">Password is too short.</p>
+             <p ng-show="userSignUpForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+             <p ng-show="userSignUpForm.password.$error.required" class="help-block">Password is required</p>
+        </div>
+
+    <!-- CONFIRM PASSWORD -->
+    	  <div class="form-group" ng-class="">
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" ng-model="user_signup.passwordConfirm" ng-minlength="3" ng-maxlength="15" placeholder="Re-type PassWord" required pw-check="password">
+            <p ng-show="userSignUpForm.confirmPassword.$error.pwcheck" class="help-block">Password mismatch.</p>
+        </div>
+
+
+     	<button type="button" id="btnRegister" class="btn btn-primary" ng-disabled="userSignUpForm.$invalid" ng-click="registerUser()">Register</button>
+     	<button type="reset" class="btn btn-primary">Cancel</button>
+	</form>
+</div>
+<div class="separator"> </div>
+	<p>Allready a Member ? <a href="#loginPage">Login to Site</a></p>
+</div>
+
+
+</body>
+</html>
