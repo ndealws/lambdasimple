@@ -20,7 +20,7 @@
   <link href="./assets/css/floatexamples.css" rel="stylesheet" type="text/css" />
   <script src="./assets/js/common/jquery.min.js"></script>
   <script src="./assets/js/common/pwCheck.js"></script>
-  
+  <script src="./assets/js/common/bootstrap.min.js"></script>
 <!-- Angular Scripts -->
 <script src="./assets/js/common/angular.min.js"></script>
 <script src="./assets/js/common/angular-route.min.js"></script>
@@ -71,7 +71,7 @@
          <div class="form-group" ng-class="{'has-error':userSignUpForm.phone.$invalid}">
             <label>Phone Number</label>
             <input type="text" name="phone" class="form-control" ng-model="user_signup.phone" placeholder="Phone Number" 
-            ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" required>
+            ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/" >
 
             <p ng-show="userSignUpForm.phone.$error.required" class="help-block">Phone number is required.</p>
             <p ng-show="userSignUpForm.phone.$error.pattern" class="help-block">Invalid phone Number</p>
@@ -95,10 +95,8 @@
    <!-- PASSWORD -->
         <div class="form-group" ng-class="{'has-error':userSignUpForm.password.$invalid && !userSignUpForm.password.$pristine}">
             <label>Password</label>
-            <input type="password" name="password" id="password" class="form-control" ng-model="user_signup.password" ng-minlength="3" ng-maxlength="15" placeholder="PassWord" required>
-             <p ng-show="userSignUpForm.password.$error.minlength" class="help-block">Password is too short.</p>
-             <p ng-show="userSignUpForm.password.$error.maxlength" class="help-block">Password is too long.</p>
-             <p ng-show="userSignUpForm.password.$error.required" class="help-block">Password is required</p>
+            <input type="password" name="password" id="password" class="form-control" ng-model="user_signup.password"  placeholder="PassWord" required>
+             <p ng-show="userSignUpForm.password.$invalid && !userSignUpForm.password.$pristine" class="help-block">Password is required</p>
         </div>
 
     <!-- CONFIRM PASSWORD -->
@@ -112,9 +110,50 @@
      	<button type="button" id="btnRegister" class="btn btn-primary" ng-disabled="userSignUpForm.$invalid" ng-click="registerUser()">Register</button>
      	<button type="reset" class="btn btn-primary">Cancel</button>
 	</form>
+
+<div class="modal fade" id="myModal_scuess" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><center> Momentro </center></h4>
+        </div>
+        <div class="modal-body">
+          <p align="center">User Successfully Registered</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="myModal_faliure" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><center> Momentro </center></h4>
+        </div>
+        <div class="modal-body">
+          <p align="center">Email already exsist in the system</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+	</div>
+</div>
+		
 </div>
 <div class="separator"> </div>
-	<p>Allready a Member ? <a href="#loginPage">Login to Site</a></p>
+	<p>Allready a Member ? <a href="index.html">Login to Site</a></p>
 </div>
 
 

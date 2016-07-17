@@ -1,8 +1,8 @@
 /**
- * http://usejsdoc.org/
+ * 
  */
-
-var momemtoControllers = angular.module('myApp',[]);
+ 
+var momemtoControllers = angular.module('myApp',['ngRoute']);
 
 momemtoControllers.controller('UserRegisterController',['$scope','$http',function($scope,$http){
 
@@ -14,13 +14,10 @@ $scope.registerUser = function(){
 	var username = $scope.user_signup.username;
 	var password = $scope.user_signup.password;
 
-/** @parms email 
-	@parms name
-	@parms phoneNo
-	@parms designation
-	@parms userName
-	@parms password 
- **/
+/** @parms Username 
+	@parms Password
+	@
+**/
 	var params = JSON.stringify({
 		email: email,
 		name: name,
@@ -30,6 +27,7 @@ $scope.registerUser = function(){
 		password: password
 	});
 
+	console.log("parameters-------->"+" "+params);
 /** Alternate way to push values in to the dynamo db ***/
 /**
 var req = {
@@ -60,18 +58,24 @@ var url ="https://gec659pixh.execute-api.eu-west-1.amazonaws.com/production"; //
 	$http.post(url,params).
     success(function(data, status, headers, config) {
         // this callback will be called asynchronously
-        // when the response is available
         console.log(data);
-        if (parseInt(data)==1){
-        				 alert("User Successfully Created !!!")
-        			}else{
-        				alert("User Creation failed. User's email is not unique !!!")
-        			}
+       
+	   // login confirmation page 
+	  // hard corded value 
+	   var loginConfirmation = "https://s3-eu-west-1.amazonaws.com/matricebucket/dev-thilina/loginConfirmation.html";
+	   
+		if(data === "1"){
+			$('#myModal_scuess').modal('show');
+			 
+			 // redirect to the confirmation page { ugly way } 
+			 window.location = loginConfirmation;  
+		}else{
+			$('#myModal_faliure').modal('show');
+		}
       }). 
     error(function(data, status, headers, config) {
         // called asynchronously if an error occurs
-        // or server returns response with an error status.
-        alert("Something went wrong!!");
+        alert("Something went wrong, please contact a system admin");
       }); 
 }
 }]);
@@ -122,18 +126,20 @@ momemtoControllers.controller('UserLoginController',['$scope','$http','$location
 	        // this callback will be called asynchronously
 	        // when the response is available
 	        console.log(data);
-	        if((parseInt(data)==1)){
-	        	$rootScope.loggedIn=true;
-	        	$location.path('/dashboard');
-	        }else{
-	        	 alert("User does not exsit");
-	        }
+	 
+			var json = data;
+			if(json.location !=null){
+			window.location = json.location;
+			}else{
+				$('#login_faliure').modal('show');
+				
+			}
+			
 	      }). 
 	    error(function(data, status, headers, config) {
 	        // called asynchronously if an error occurs
 	        // or server returns response with an error status.
-	        alert("Something went wrong!!!");
+	        alert("Something went wrong, please contatc a system admin");
 	      }); 
 	}
 	}]);
-

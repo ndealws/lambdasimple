@@ -25,13 +25,13 @@
 <script src="./assets/js/common/angular.min.js"></script>
 <script src="./assets/js/common/angular-route.min.js"></script>
 <script src="./assets/js/common/angular-animate.min.js"></script>
-
+ <script src="./assets/js/common/bootstrap.min.js"></script>
+ 
 <!-- favicon snippet -->
 <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png">
 
 <!-- Controller Scripts -->
 <script src="./assets/js/app/controllers.js"></script>
-<script src="./assets/js/app/app.js"></script>
 
   <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -49,8 +49,8 @@
 <div class="col-sm-4 col-sm-offset-4">
  <div class="page-header"><h1>User Login</h1></div>
  
-	<div ng-cotroller="UserLoginController">
-	
+	<div ng-controller="UserLoginController">
+
 	<form name="userLoginForm"  novalidate> 
         <!-- EMAIL -->
         <div class="form-group" ng-class="{'has-error':userLoginForm.email.$invalid && !userLoginForm.email.$pristine}">
@@ -67,16 +67,35 @@
              <p ng-show="userLoginForm.password.$error.maxlength" class="help-block">Password is too long.</p>
         </div>
      <button type="button" id="btnLogin" class="btn btn-primary" ng-disabled="userLoginForm.$invalid" ng-click="loginUser()">Login</button>
-     <a href="#lostPassword">Lost Your Password?</a>
+     <a href="lostPassword.html">Lost Your Password?</a>
 	</form>
-	<div class="separator">
-	<p>New to site ? <a href="#createAccount">Create Account</a></p>
+	
+	<div class="modal fade" id="login_faliure" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><center> Momentro </center></h4>
+        </div>
+        <div class="modal-body">
+          <p align="center">Invalid Username or Password</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+	</div>
 </div>
+	
+	</div>
+	<div class="separator">
+	<p>New to site ? <a href="register2.html">Create Account</a></p>
 </div>
 </div>
 
-   
-<div class="ng-view"> </div>
 
 
 </body>
