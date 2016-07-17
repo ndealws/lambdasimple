@@ -28,7 +28,11 @@ exports.handler = function(event, context) {
                 return 0;
        }else{
            console.log("User exist in the backend");
-          context.succeed('1');
+         // context.succeed('1');
+         //if the response is 200 it would return the path of the dashboard
+           context.succeed({
+        location : "https://s3-eu-west-1.amazonaws.com/matricebucket/dev-thilina/dashboard.html"
+    });
                 return 0;    
         }
         }});
