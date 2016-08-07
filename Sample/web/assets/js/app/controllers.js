@@ -2,7 +2,23 @@
  * 
  */
  
-var momemtoControllers = angular.module('myApp',['ngRoute']);
+var momemtoControllers = angular.module('myApp',['ngRoute','ngCookies']);
+
+//Service for pass data between controllers
+//angular.module('myApp').service('momemtroService', function() {
+//	var savedData ={};
+// 
+//	 this.setData = function(data) {
+//	   this.savedData = data;
+//	    //sessionStorage.momemtroService = angular.toJson(savedData);
+//		alert("savedData-------->"+" "+savedData);
+//	 };
+//	 this.getData = function () {
+//	 // savedData = angular.fromJson(sessionStorage.momemtroService);
+//	 return savedData;
+//	 };
+//});
+
 
 momemtoControllers.controller('UserRegisterController',['$scope','$http',function($scope,$http){
 
@@ -13,6 +29,7 @@ $scope.registerUser = function(){
 	var designation = $scope.user_signup.designation;
 	var username = $scope.user_signup.username;
 	var password = $scope.user_signup.password;
+	
 
 /** @parms Username 
 	@parms Password
@@ -75,12 +92,12 @@ var url ="https://gec659pixh.execute-api.eu-west-1.amazonaws.com/production"; //
       }). 
     error(function(data, status, headers, config) {
         // called asynchronously if an error occurs
-        alert("Something went wrong, please contact a system admin");
+        window.location ="https://s3-eu-west-1.amazonaws.com/matricebucket/dev-thilina/404.html";
       }); 
 }
 }]);
 
-momemtoControllers.controller('UserLoginController',['$scope','$http','$location','$rootScope',function($scope,$http,$location,$rootScope){
+momemtoControllers.controller('UserLoginController',['$scope','$http','$location','$rootScope','$cookieStore',function($scope,$http,$location,$rootScope,$cookieStore){
 
 	$scope.loginUser = function(){
 		var email = $scope.user_login.email;
@@ -129,9 +146,74 @@ momemtoControllers.controller('UserLoginController',['$scope','$http','$location
 	 
 			var json = data;
 			if(json.location !=null){
-			window.location = json.location;
+				
+				//set values to the coockies 	
+				$cookieStore.put('sucessEmail',$scope.user_login.email);
+				window.location = json.location;
 			}else{
 				$('#login_faliure').modal('show');
+				
+			}
+			
+	      }). 
+	    error(function(data, status, headers, config) {
+	        // called asynchronously if an error occurs
+	        // or server returns response with an error status.
+	        
+	        window.location = "https://s3-eu-west-1.amazonaws.com/matricebucket/dev-thilina/404.html";
+	      }); 
+	}
+	}]);
+
+momemtoControllers.controller('ShowDataController',['$scope','$http','$location','$rootScope','$cookieStore',function($scope,$http,$location,$rootScope,$cookieStore){
+
+	$scope.showUser= function(){
+		//Get data from the cookieStore
+		var useremail = $cookieStore.get('sucessEmail');
+		
+	// full contact API call 
+	var url ='https://api.fullcontact.com/v2/person.json?email='+useremail+'&apiKey=522d8edc9ceddc60'; 
+
+		$http.post(url).
+	    success(function(data, status, headers, config) {
+	        // this callback will be called asynchronously
+	        // when the response is available
+	        console.log(data);
+	 
+			var json = data;
+			if(json  !=null){
+				// show details 
+				document.getElementById("showdata").innerHTML = JSON.stringify(json, undefined, 2);
+			}else{
+			//	$('#login_faliure').modal('show');
+				
+			}
+			
+	      }). 
+	    error(function(data, status, headers, config) {
+	        // called asynchronously if an error occurs
+	        // or server returns response with an error status.
+	        window.location = "https://s3-eu-west-1.amazonaws.com/matricebucket/dev-thilina/204.html";
+	      }); 
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	$scope.showUserPipl = function(){
+		var useremail = $cookieStore.get('sucessEmail');
+		var url_pipl ='http://api.pipl.com/search/?email='+useremail+'&key=kgmak0db8ea4f7shalkwcaef';
+		
+		// pipl call 
+		http.get(url_pipl).
+	    success(function(data, status, headers, config) {
+	        // this callback will be called asynchronously
+	        // when the response is available
+	        console.log(data);
+	 
+			var json = data;
+			if(json  !=null){
+				// show details 
+				document.getElementById("showdata_pipl").innerHTML = JSON.stringify(json, undefined, 2);
+			}else{
+			//	$('#login_faliure').modal('show');
 				
 			}
 			
@@ -143,3 +225,64 @@ momemtoControllers.controller('UserLoginController',['$scope','$http','$location
 	      }); 
 	}
 	}]);
+
+momemtoControllers.controller('GenerateDataController',['$scope','$http',function($scope,$http){
+
+	$scope.generateUser= function(){
+		var generateEmail = $scope.user_dash.email;
+		
+	// full contact API call 
+	var url ='https://api.fullcontact.com/v2/person.json?email='+generateEmail +'&apiKey=522d8edc9ceddc60'; 
+
+		$http.get(url).
+	    success(function(data, status, headers, config) {
+	        // this callback will be called asynchronously
+	        // when the response is available
+	        console.log(data);
+	 
+			var json = data;
+			if(json  !=null){
+				// show details 
+				document.getElementById("showdata").innerHTML = JSON.stringify(json, undefined, 2);
+			}else{
+			//	$('#login_faliure').modal('show');
+				
+			}
+			
+	      }). 
+	    error(function(data, status, headers, config) {
+	        // called asynchronously if an error occurs
+	        // or server returns response with an error status.
+			$('#myModal_noUserDetails').modal('show');
+	      }); 
+	}
+////////////////////////////////////////////////////////////////////////////////////////////////
+	$scope.generateUserPipl = function(){
+		var generateEmail = $scope.user_dash.email;
+		var url_pipl ='http://api.pipl.com/search/?email='+generateEmail+'&key=kgmak0db8ea4f7shalkwcaef';
+			// pipl API call
+		$http.get(url_pipl).
+	    success(function(data, status, headers, config) {
+	        // this callback will be called asynchronously
+	        // when the response is available
+	        console.log(data);
+	 
+			var json = data;
+			if(json  !=null){
+				// show details 
+				document.getElementById("showdata_pipl").innerHTML = JSON.stringify(json, undefined, 2);
+			}else{
+			//	$('#login_faliure').modal('show');
+				
+			}
+			
+	      }). 
+	    error(function(data, status, headers, config) {
+	        // called asynchronously if an error occurs
+	        // or server returns response with an error status.
+			$('#myModal_noUserDetails').modal('show');
+	      });    
+		}
+	}]);
+
+

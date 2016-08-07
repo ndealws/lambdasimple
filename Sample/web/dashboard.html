@@ -1,10 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-ng-app="myApp">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title></title>
+
+<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="./assets/css/font-awesome.min.css" rel="stylesheet">
+<link href="./assets/css/animate.min.css" rel="stylesheet">
+
+<!-- Custom styling plus plugins -->
+
+<link href="./assets/css/floatexamples.css" rel="stylesheet"
+	type="text/css" />
+<script src="./assets/js/common/jquery.min.js"></script>
+<script src="./assets/js/common/pwCheck.js"></script>
+<script src="./assets/js/common/bootstrap.min.js"></script>
+<!-- Angular Scripts -->
+<script src="./assets/js/common/angular.min.js"></script>
+<script src="./assets/js/common/angular-route.min.js"></script>
+<script src="./assets/js/common/angular-animate.min.js"></script>
+<script src="./assets/js/common/angular-cookies.min.js"></script>
+
+<!-- favicon snippet -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./assets/images/favicon-16x16.png">
+
+<!-- Controller Scripts -->
+<script src="./assets/js/app/controllers.js"></script>
+
+<!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
 </head>
-<body>
-<h1>Hello User </h1>
+<body style="background: #F7F7F7;">
+	<h1>Hello User</h1>
+	<div ng-controller="ShowDataController">
+		<div class="row">
+			<div id="fullContact" class="col-md-4"
+				style="height: 350px; overflow: scroll; padding-left: 20px">
+				<label>Full Contact API</label>
+				<pre id="showdata"></pre>
+			</div>
+			<div id="pipl" class="col-md-4"
+				style="height: 350px; overflow: scroll;">
+				<label>Pipl API</label>
+				<pre id="showdata_pipl"></pre>
+			</div>
+			<div id="fullContact" class="col-md-4"
+				style="height: 350px; overflow: scroll; padding-left: 10px;">
+				<label>Graph API</label>
+				<pre id="showdata_fb"></pre>
+			</div>
+		</div>
+		<button type="button" id="btnShow" class="btn btn-primary"
+			ng-click="showUser(); showUserPipl()">Show</button>
+
+	</div>
+	<div class="row" class="col-md-12" style="padding-top: 10px;">
+		<div id="emailSearch" style="padding-left: 20px;"
+			ng-controller="GenerateDataController">
+			<div id="header">
+				<label>Please Enter your Testing Email(s) :</label>
+			</div>
+			<div class="col-md-4 ">
+				<form name="userEmails" novalidate>
+					<div class="form-group"
+						ng-class="{'has-error':userLoginForm.email.$invalid && !userLoginForm.email.$pristine}">
+						<label>Email</label> <input type="email" name="email"
+							class="form-control" ng-model="user_dash.email"
+							placeholder="Email" required>
+						<p
+							ng-show="userLoginForm.email.$invalid && !userLoginForm.email.$pristine"
+							class="help-block">Enter a valid email.</p>
+					</div>
+
+					<button type="button" id="btnGenerate" class="btn btn-primary"
+						ng-disabled="userLoginForm.$invalid" ng-click="generateUser(); generateUserPipl()">Generate
+						Result</button>
+				</form>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModal_noUserDetails" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						<center>Momentro</center>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<p>User details cannot find for the given email</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 </body>
 </html>
